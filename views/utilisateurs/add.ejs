@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1>Ajouter un utilisateur</h1>
+  <form method="POST" action="/utilisateurs/ajouter">
+    <label>Nom<input type="text" name="nom" required /></label>
+    <label>Prénom<input type="text" name="prenom" /></label>
+    <label>Email<input type="email" name="email" required /></label>
+    <label>Mot de passe<input type="password" name="motDePasse" required /></label>
+    <label>Rôle
+      <select name="roleId" required>
+        <% roles.forEach(r => { %><option value="<%= r.id %>"><%= r.nom %></option><% }) %>
+      </select>
+    </label>
+    <button type="submit">Enregistrer</button>
+    <a href="/utilisateurs">Annuler</a>
+  </form>
+</div>
+<%- include('../partials/footer') %>

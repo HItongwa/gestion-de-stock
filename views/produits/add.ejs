@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1>Ajouter un produit</h1>
+  <form method="POST" action="/produits/ajouter">
+    <label>Nom<input type="text" name="nom" required /></label>
+    <label>Quantité<input type="number" name="quantite" value="0" min="0" /></label>
+    <label>Prix<input type="number" name="prix" step="0.01" required /></label>
+    <label>Catégorie
+      <select name="categorieId" required>
+        <% categories.forEach(c => { %><option value="<%= c.id %>"><%= c.nom %></option><% }) %>
+      </select>
+    </label>
+    <label>Fournisseur
+      <select name="fournisseurId" required>
+        <% fournisseurs.forEach(f => { %><option value="<%= f.id %>"><%= f.nom %></option><% }) %>
+      </select>
+    </label>
+    <button type="submit">Enregistrer</button>
+    <a href="/produits">Annuler</a>
+  </form>
+</div>
+<%- include('../partials/footer') %>

@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+<div class="container">
+  <h1>Liste des Produits</h1>
+  <a href="/produits/ajouter" class="btn">+ Ajouter un produit</a>
+  <table>
+    <thead><tr><th>ID</th><th>Nom</th><th>Quantité</th><th>Prix</th><th>Catégorie</th><th>Fournisseur</th><th>Actions</th></tr></thead>
+    <tbody>
+      <% produits.forEach(p => { %>
+      <tr>
+        <td><%= p.id %></td>
+        <td><%= p.nom %></td>
+        <td><%= p.quantite %></td>
+        <td><%= p.prix %> $</td>
+        <td><%= p.Categorie ? p.Categorie.nom : 'N/A' %></td>
+        <td><%= p.Fournisseur ? p.Fournisseur.nom : 'N/A' %></td>
+        <td>
+          <a href="/produits/edit/<%= p.id %>">✏️</a>
+          <a href="/produits/delete/<%= p.id %>" onclick="return confirm('Supprimer ?')">🗑️</a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<%- include('../partials/footer') %>
