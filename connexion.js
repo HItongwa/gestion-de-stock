@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize";
 
-const connexion = new Sequelize("stock_db", "root", "TON_MOT_DE_PASSE", {
+const connexion = new Sequelize("gestion_stock_db", "root", "", {
   host: "localhost",
   dialect: "mysql",
-  port: 3306, // ← IMPORTANT
+  port: 3306,
   logging: false
 });
 
