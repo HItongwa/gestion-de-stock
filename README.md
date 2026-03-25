@@ -8,7 +8,6 @@ npm install
 npm start
 ```
 
-Serveur : http://localhost:5000
 
 ## Structure du projet
 
