@@ -81,20 +81,22 @@ app.use('/utilisateurs', utilisateurRoutes)
 const startDB = async () => {
   try {
     await connexion.authenticate()
-    console.log(' Connexion à la base de données réussie !')
+    console.log('Connexion à la base de données réussie !')
 
     await connexion.sync({ alter: true })
-    console.log(' Toutes les tables sont synchronisées.')
+    console.log('Toutes les tables sont synchronisées.')
 
     // Données initiales
     if (await Role.count() === 0) {
       await Role.bulkCreate([{ nom: 'Admin' }, { nom: 'Utilisateur' }])
       console.log('Rôles créés !')
     }
+
     if (await Categorie.count() === 0) {
       await Categorie.bulkCreate([{ nom: 'Informatique' }, { nom: 'Bureautique' }])
       console.log('Catégories créées !')
     }
+
     if (await Fournisseur.count() === 0) {
       await Fournisseur.create({ nom: 'Fournisseur Général', contactEmail: 'contact@test.com' })
       console.log('Fournisseur créé !')
@@ -102,8 +104,9 @@ const startDB = async () => {
 
     const PORT = process.env.PORT || 5000
     app.listen(PORT, () => console.log(`Serveur lancé sur http://localhost:${PORT}`))
+
   } catch (error) {
-    console.error('Erreur de démarrage :', error.message)
+    console.error('Erreur de démarrage complète :', error)
   }
 }
 
