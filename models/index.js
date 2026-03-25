@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import connexion from '../connexion.js';
 import Role from './Role.js';
 import Utilisateur from './Utilisateur.js';
@@ -41,21 +40,6 @@ export const seedReferenceData = async () => {
       nom: 'Fournisseur General',
       contactEmail: 'contact@test.com',
     });
-  }
-
-  const userCount = await Utilisateur.count();
-  if (userCount === 0) {
-    const adminRole = await Role.findOne({ where: { nom: 'Admin' } });
-    if (adminRole) {
-      const motDePasse = await bcrypt.hash('admin1234', 10);
-      await Utilisateur.create({
-        nom: 'Admin',
-        prenom: 'Systeme',
-        email: 'admin@gestionstock.local',
-        motDePasse,
-        roleId: adminRole.id,
-      });
-    }
   }
 };
 
