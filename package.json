@@ -1,10 +1,13 @@
 {
   "name": "gestion-de-stock",
   "version": "1.0.0",
-  "description": "Frontend simple en HTML, CSS et JavaScript pour une application de gestion de stock.",
+  "description": "Application de gestion de stock avec frontend et backend Node/Express/Sequelize.",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "db:check": "node scripts/verify-db.js"
   },
   "repository": {
     "type": "git",
@@ -13,14 +16,18 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/HItongwa/gestion-de-stock/issues"
   },
   "homepage": "https://github.com/HItongwa/gestion-de-stock#readme",
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.3.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.20.0",
     "sequelize": "^6.37.8"
   }
