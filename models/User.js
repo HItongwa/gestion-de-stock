@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const connexion = require('../connexion'); // <-- CORRECTION ICI
+const connexion = require('../connexion'); // IMPORTANT
 
 const User = connexion.define('User', {
   nom: {
