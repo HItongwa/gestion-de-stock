@@ -1,7 +1,7 @@
 {
-  "name": "gestion_stock",
+  "name": "gestion-de-stock",
   "version": "1.0.0",
-  "description": "API Node/Express/Sequelize pour la gestion de stock",
+  "description": "Application de gestion de stock avec frontend et backend Node/Express/Sequelize.",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,17 @@
     "dev": "node --watch index.js",
     "db:check": "node scripts/verify-db.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HItongwa/gestion-de-stock.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HItongwa/gestion-de-stock/issues"
+  },
+  "homepage": "https://github.com/HItongwa/gestion-de-stock#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
@@ -17,7 +28,7 @@
     "express-session": "^1.18.2",
     "express-validator": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.6.0",
-    "sequelize": "^6.37.0"
+    "mysql2": "^3.20.0",
+    "sequelize": "^6.37.8"
   }
 }
