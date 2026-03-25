@@ -46,12 +46,12 @@ gestion_stock/
 
 ## Routes API REST (toutes protégées par JWT)
 
-### 🔐 Authentification
+### Authentification
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | POST | `/api/auth/login` | Obtenir un token JWT |
 
-### 📂 Catégories
+### Catégories
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | GET | `/api/categories?page=1&limit=10` | Liste paginée |
@@ -60,7 +60,7 @@ gestion_stock/
 | PUT | `/api/categories/:id` | Modifier |
 | DELETE | `/api/categories/:id` | Supprimer |
 
-### 🏭 Fournisseurs
+### Fournisseurs
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | GET | `/api/fournisseurs?page=1&limit=10` | Liste paginée |
@@ -69,7 +69,7 @@ gestion_stock/
 | PUT | `/api/fournisseurs/:id` | Modifier |
 | DELETE | `/api/fournisseurs/:id` | Supprimer |
 
-### 📦 Produits
+### Produits
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | GET | `/api/produits/api?page=1&limit=10` | Liste paginée |
@@ -78,7 +78,7 @@ gestion_stock/
 | PUT | `/api/produits/api/:id` | Modifier |
 | DELETE | `/api/produits/api/:id` | Supprimer |
 
-### 👥 Utilisateurs
+### Utilisateurs
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | GET | `/api/utilisateurs/api?page=1&limit=10` | Liste paginée |
@@ -87,7 +87,7 @@ gestion_stock/
 | PUT | `/api/utilisateurs/api/:id` | Modifier |
 | DELETE | `/api/utilisateurs/api/:id` | Supprimer |
 
-### 📊 Historique Stock
+### Historique Stock
 | Méthode | Route | Description |
 |---------|-------|-------------|
 | GET | `/api/stock/historique?page=1&limit=10` | Tout l'historique |
