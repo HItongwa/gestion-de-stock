@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const connexion = require('../connexion'); // <-- CORRECTION ICI
 
-const Product = sequelize.define('Product', {
+const User = connexion.define('User', {
   nom: {
     type: DataTypes.STRING,
     allowNull: false
@@ -12,4 +12,4 @@ const Product = sequelize.define('Product', {
   }
 });
 
-module.exports = Product;
+module.exports = User;
