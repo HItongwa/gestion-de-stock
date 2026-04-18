@@ -1,0 +1,87 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h2 class="page-title mb-2"><i class="fas fa-truck me-2"></i>Fournisseurs</h2>
+        <p class="text-muted mb-0">Suivez les contacts clés et les partenaires de votre chaîne d’approvisionnement.</p>
+    </div>
+    <div class="d-flex flex-column flex-sm-row gap-3 w-100 w-md-auto">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+            <input id="searchFournisseur" type="search" class="form-control border-start-0" placeholder="Rechercher un fournisseur..." onkeyup="filterTable('searchFournisseur', 'fournisseurTable')">
+        </div>
+        <a href="/fournisseurs/add" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>Ajouter
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table id="fournisseurTable" class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Produits</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (fournisseurs && fournisseurs.length > 0) { %>
+                    <% fournisseurs.forEach(fournisseur => { %>
+                        <tr>
+                            <td><%= fournisseur.nom %></td>
+                            <td><a href="mailto:<%= fournisseur.contactEmail %>"><%= fournisseur.contactEmail %></a></td>
+                            <td><%= fournisseur.telephone || '-' %></td>
+                            <td>
+                                <% if (fournisseur.Produits && fournisseur.Produits.length > 0) { %>
+                                    <span class="badge bg-primary"><%= fournisseur.Produits.length %></span>
+                                <% } else { %>
+                                    <span class="text-muted">-</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/fournisseurs/<%= fournisseur.id %>/edit" class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteFournisseur(<%= fournisseur.id %>)" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">Aucun fournisseur</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function filterTable(inputId, tableId) {
+    const query = document.getElementById(inputId).value.toLowerCase();
+    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+    });
+}
+
+function deleteFournisseur(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce fournisseur ?')) {
+        fetch(`/fournisseurs/${id}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if (res.ok) location.reload();
+            else alert('Impossible de supprimer ce fournisseur');
+        });
+    }
+}
+</script>
+
+<%- include('../partials/footer') %>

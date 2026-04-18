@@ -8,6 +8,7 @@ import produitRoutes from './routes/produitRoutes.js';
 import utilisateurRoutes from './routes/utilisateurRoutes.js';
 import { getDashboard } from './controllers/HomeController.js';
 import { renderLogin, loginUtilisateur } from './controllers/UtilisateurController.js';
+import { requireAuth } from './middleware/auth.js';
 import {
   connexion,
   seedReferenceData,
@@ -36,27 +37,25 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/categories', categorieRoutes);
-app.use('/api/fournisseurs', fournisseurRoutes);
-app.use('/api/stock/historique', historiqueStockRoutes);
-app.use('/api/produits', (req, res, next) => {
-  req.url = `/api${req.url}`;
-  next();
-}, produitRoutes);
-app.use('/api/utilisateurs', (req, res, next) => {
-  req.url = `/api${req.url}`;
-  next();
-}, utilisateurRoutes);
-
+// Routes d'authentification
 app.get('/login', renderLogin);
 app.post('/login', loginUtilisateur);
 app.get('/logout', (req, res) => {
   req.session.destroy(() => res.redirect('/login'));
 });
+
+// Routes du dashboard
 app.get('/', getDashboard);
+
+// Routes Web (avec rendu EJS)
 app.use('/produits', produitRoutes);
 app.use('/utilisateurs', utilisateurRoutes);
+app.use('/categories', categorieRoutes);
+app.use('/fournisseurs', fournisseurRoutes);
+app.use('/api/stock/historique', historiqueStockRoutes);
+
+// Routes API (si besoin)
+app.use('/api/auth', authRoutes);
 
 const startDB = async () => {
   try {

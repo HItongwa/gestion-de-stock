@@ -7,6 +7,22 @@ import Fournisseur from './Fournisseur.js';
 import Produit from './Produit.js';
 import HistoriqueStock from './HistoriqueStock.js';
 
+// Associations
+Utilisateur.belongsTo(Role, { foreignKey: 'roleId' });
+Role.hasMany(Utilisateur, { foreignKey: 'roleId' });
+
+Produit.belongsTo(Categorie, { foreignKey: 'categorieId' });
+Categorie.hasMany(Produit, { foreignKey: 'categorieId' });
+
+Produit.belongsTo(Fournisseur, { foreignKey: 'fournisseurId' });
+Fournisseur.hasMany(Produit, { foreignKey: 'fournisseurId' });
+
+HistoriqueStock.belongsTo(Produit, { foreignKey: 'produitId' });
+Produit.hasMany(HistoriqueStock, { foreignKey: 'produitId' });
+
+HistoriqueStock.belongsTo(Utilisateur, { foreignKey: 'utilisateurId' });
+Utilisateur.hasMany(HistoriqueStock, { foreignKey: 'utilisateurId' });
+
 export {
   connexion,
   Role,

@@ -1,0 +1,84 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h2 class="page-title mb-2"><i class="fas fa-history me-2"></i>Historique des mouvements</h2>
+        <p class="text-muted mb-0">Suivez chaque entrée, sortie ou ajustement de stock en temps réel.</p>
+    </div>
+    <div class="d-flex flex-column flex-sm-row gap-3 w-100 w-md-auto">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+            <input id="searchHistorique" type="search" class="form-control border-start-0" placeholder="Rechercher une activité..." onkeyup="filterTable('searchHistorique', 'historiqueTable')">
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table id="historiqueTable" class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Produit</th>
+                    <th>Type</th>
+                    <th>Quantité</th>
+                    <th>Ancien Stock</th>
+                    <th>Nouveau Stock</th>
+                    <th>Utilisateur</th>
+                    <th>Raison</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (historiques && historiques.length > 0) { %>
+                    <% historiques.forEach(histo => { %>
+                        <tr>
+                            <td><%= new Date(histo.createdAt).toLocaleDateString('fr-FR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %></td>
+                            <td><%= histo.Produit ? histo.Produit.nom : '-' %></td>
+                            <td>
+                                <% if (histo.type === 'entree') { %>
+                                    <span class="badge bg-success">Entrée</span>
+                                <% } else if (histo.type === 'sortie') { %>
+                                    <span class="badge bg-danger">Sortie</span>
+                                <% } else { %>
+                                    <span class="badge bg-warning">Ajustement</span>
+                                <% } %>
+                            </td>
+                            <td><strong><%= histo.quantite %></strong></td>
+                            <td><%= histo.ancienneQuantite !== null ? histo.ancienneQuantite : '-' %></td>
+                            <td><%= histo.nouvelleQuantite !== null ? histo.nouvelleQuantite : '-' %></td>
+                            <td><%= histo.Utilisateur ? histo.Utilisateur.prenom + ' ' + histo.Utilisateur.nom : '-' %></td>
+                            <td><small><%= histo.raison || '-' %></small></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">Aucun mouvement</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+            </li>
+        <% } %>
+    </ul>
+</nav>
+
+<script>
+function filterTable(inputId, tableId) {
+    const query = document.getElementById(inputId).value.toLowerCase();
+    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+    });
+}
+</script>
+
+<%- include('../partials/footer') %>

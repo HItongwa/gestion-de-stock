@@ -1,0 +1,83 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h2 class="page-title mb-2"><i class="fas fa-tag me-2"></i>Catégories</h2>
+        <p class="text-muted mb-0">Organisez vos produits par famille et retrouvez rapidement les stocks associés.</p>
+    </div>
+    <div class="d-flex flex-column flex-sm-row gap-3 w-100 w-md-auto">
+        <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+            <input id="searchCategorie" type="search" class="form-control border-start-0" placeholder="Rechercher une catégorie..." onkeyup="filterTable('searchCategorie', 'categorieTable')">
+        </div>
+        <a href="/categories/add" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus me-2"></i>Ajouter
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table id="categorieTable" class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Nom</th>
+                    <th>Produits</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (categories && categories.length > 0) { %>
+                    <% categories.forEach(categorie => { %>
+                        <tr>
+                            <td><%= categorie.nom %></td>
+                            <td>
+                                <% if (categorie.Produits && categorie.Produits.length > 0) { %>
+                                    <span class="badge bg-primary"><%= categorie.Produits.length %></span>
+                                <% } else { %>
+                                    <span class="text-muted">-</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/categories/<%= categorie.id %>/edit" class="btn btn-sm btn-warning" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteCategorie(<%= categorie.id %>)" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="3" class="text-center text-muted py-4">Aucune catégorie</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function filterTable(inputId, tableId) {
+    const query = document.getElementById(inputId).value.toLowerCase();
+    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(query) ? '' : 'none';
+    });
+}
+
+function deleteCategorie(id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')) {
+        fetch(`/categories/${id}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if (res.ok) location.reload();
+            else alert('Impossible de supprimer cette catégorie');
+        });
+    }
+}
+</script>
+
+<%- include('../partials/footer') %>

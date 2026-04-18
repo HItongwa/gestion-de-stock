@@ -1,49 +1,97 @@
 <%- include('../partials/header') %>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Ajouter un produit</h4>
-                </div>
-                <div class="card-body">
-                    <form action="/produits/ajouter" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Nom du produit</label>
-                            <input type="text" name="nom" class="form-control" required>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Prix ($)</label>
-                                <input type="number" step="0.01" name="prix" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold">Quantité</label>
-                                <input type="number" name="quantite" class="form-control" value="0" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Catégorie</label>
-                            <select name="categorieId" class="form-select" required>
+<div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h2 class="form-title"><i class="fas fa-plus me-2"></i>Ajouter un produit</h2>
+        <p class="form-subtitle">Créer un nouvel article avec prix, fournisseur et seuil de stock.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-8 col-lg-9">
+        <div class="card form-card">
+            <div class="card-body">
+                <% if (errors && errors.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <% errors.forEach(error => { %>
+                            <div><%= error.msg %></div>
+                        <% }); %>
+                    </div>
+                <% } %>
+
+                <form method="POST" action="/produits">
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom du produit *</label>
+                        <input type="text" class="form-control" id="nom" name="nom" value="<%= formData ? formData.nom : '' %>" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3"><%= formData ? formData.description : '' %></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="sku" class="form-label">SKU *</label>
+                        <input type="text" class="form-control" id="sku" name="sku" value="<%= formData ? formData.sku : '' %>" required>
+                        <small class="text-muted">Code unique du produit</small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="categorieId" class="form-label">Catégorie *</label>
+                            <select class="form-select" id="categorieId" name="categorieId" required>
+                                <option value="">-- Sélectionner --</option>
                                 <% categories.forEach(cat => { %>
-                                    <option value="<%= cat.id %>"><%= cat.nom %></option>
-                                <% }) %>
+                                    <option value="<%= cat.id %>" <%= formData && formData.categorieId == cat.id ? 'selected' : '' %>>
+                                        <%= cat.nom %>
+                                    </option>
+                                <% }); %>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Fournisseur</label>
-                            <select name="fournisseurId" class="form-select" required>
-                                <% fournisseurs.forEach(fourn => { %>
-                                    <option value="<%= fourn.id %>"><%= fourn.nom %></option>
-                                <% }) %>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fournisseurId" class="form-label">Fournisseur *</label>
+                            <select class="form-select" id="fournisseurId" name="fournisseurId" required>
+                                <option value="">-- Sélectionner --</option>
+                                <% fournisseurs.forEach(fou => { %>
+                                    <option value="<%= fou.id %>" <%= formData && formData.fournisseurId == fou.id ? 'selected' : '' %>>
+                                        <%= fou.nom %>
+                                    </option>
+                                <% }); %>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Enregistrer</button>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="prix" class="form-label">Prix ($) *</label>
+                            <input type="number" class="form-control" id="prix" name="prix" step="0.01" min="0" value="<%= formData ? formData.prix : '' %>" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="quantite" class="form-label">Quantité initiale *</label>
+                            <input type="number" class="form-control" id="quantite" name="quantite" min="0" value="<%= formData ? formData.quantite : '0' %>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantiteMin" class="form-label">Quantité minimum</label>
+                        <input type="number" class="form-control" id="quantiteMin" name="quantiteMin" min="0" value="<%= formData ? formData.quantiteMin : '5' %>">
+                        <small class="text-muted">Seuil d'alerte pour le stock faible</small>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Ajouter
+                        </button>
+                        <a href="/produits" class="btn btn-secondary">
+                            <i class="fas fa-times me-2"></i>Annuler
+                        </a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 <%- include('../partials/footer') %>
