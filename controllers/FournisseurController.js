@@ -20,7 +20,7 @@ export const listFournisseurs = async (req, res) => {
 export const renderAddFournisseur = async (req, res) => {
   try {
     if (!req.session.user) return res.redirect('/login');
-    res.render('fournisseurs/add', { errors: [] });
+    res.render('fournisseurs/add', { errors: [], formData: {} });
   } catch (error) {
     console.error('Erreur render add fournisseur:', error);
     res.status(500).send('Erreur serveur');

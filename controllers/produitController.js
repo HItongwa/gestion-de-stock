@@ -27,7 +27,7 @@ export const renderAddProduit = async (req, res) => {
     const categories = await Categorie.findAll();
     const fournisseurs = await Fournisseur.findAll();
     
-    res.render('produits/add', { categories, fournisseurs, errors: [] });
+    res.render('produits/add', { categories, fournisseurs, errors: [], formData: {} });
   } catch (error) {
     console.error('Erreur render add produit:', error);
     res.status(500).send('Erreur serveur');

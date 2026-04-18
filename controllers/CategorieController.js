@@ -20,7 +20,7 @@ export const listCategories = async (req, res) => {
 export const renderAddCategorie = async (req, res) => {
   try {
     if (!req.session.user) return res.redirect('/login');
-    res.render('categories/add', { errors: [] });
+    res.render('categories/add', { errors: [], formData: {} });
   } catch (error) {
     console.error('Erreur render add categorie:', error);
     res.status(500).send('Erreur serveur');

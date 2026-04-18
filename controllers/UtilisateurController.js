@@ -69,7 +69,7 @@ export const renderAddUtilisateur = async (req, res) => {
     if (!req.session.user) return res.redirect('/login');
     
     const roles = await Role.findAll();
-    res.render('utilisateurs/add', { roles, errors: [] });
+    res.render('utilisateurs/add', { roles, errors: [], formData: {} });
   } catch (error) {
     console.error('Erreur render add utilisateur:', error);
     res.status(500).send('Erreur serveur');
